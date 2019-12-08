@@ -1,11 +1,5 @@
-// const fs = require("fs")
-
-// fs.writeFileSync("notes.txt", "This file was created by nodeJS")
-// fs.appendFileSync("notes.txt", "\nps. JS rocks xD")
-const validator = require('validator')
-const chalk = require('chalk')
 const yargs = require('yargs')
-const getNotes = require('./notes')
+const notes = require('./notes')
 
 yargs.version('1.1.0')
 
@@ -25,16 +19,22 @@ yargs.command({
         }
     },
     handler: function (argv) {
-        console.log(`Title: ${argv.title}`)
-        console.log(argv.body);
+        notes.addNote(argv.title, argv.body)
     }
 })
 
 yargs.command({
     command: "remove",
     describe: "Removing a new note",
-    handler: function () {
-        console.log('remove an old note!')
+    builder: {
+        title: {
+            describe: "Note title",
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function (argv) {
+        notes.removeNote(argv.title)
     }
 })
 
@@ -42,16 +42,24 @@ yargs.command({
     command: "list",
     describe: "Listing notes",
     handler: function () {
-        console.log('listing all notes!')
+        notes.listNotes();
     }
 })
 
 yargs.command({
     command: "read",
     describe: "Reading a note",
-    handler: function () {
-        console.log('read a note!')
+    builder: {
+        title: {
+            describe: "Note title",
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler: function (argv) {
+        notes.readNote(argv.title)
     }
 })
 
-console.log(yargs.argv);
+// console.log(yargs.argv);
+yargs.parse()

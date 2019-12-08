@@ -10,7 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^3.0.0",
-    "validator": "^12.1.0",
     "yargs": "^14.2.0"
   }
 }
